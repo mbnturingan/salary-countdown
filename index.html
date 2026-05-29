@@ -335,6 +335,144 @@
     margin-top: 4px;
     display: none;
   }
+
+  .team-building-box {
+    background: linear-gradient(45deg, #00ff00, #ffff00);
+    border: 8px solid #ff00ff;
+    padding: 12px;
+    margin: 6px 0;
+    text-align: center;
+    position: relative;
+    animation: teamBuildingPulse 1.2s ease-in-out infinite;
+    box-shadow: 0 0 20px #ff00ff;
+  }
+
+  @keyframes teamBuildingPulse {
+    0%, 100% { box-shadow: 0 0 10px #ff00ff; }
+    50% { box-shadow: 0 0 30px #00ff00, inset 0 0 20px rgba(255, 0, 255, 0.5); }
+  }
+
+  .team-building-box::before {
+    content: '🎉 TEAM BUILDING EVENT 🎉';
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff00ff;
+    color: #ffff00;
+    font-size: 11px;
+    padding: 2px 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    border: 2px solid #00ff00;
+    animation: teamBuildingBounce 0.8s ease-in-out infinite;
+  }
+
+  @keyframes teamBuildingBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-4px); }
+  }
+
+  .team-building-label {
+    font-family: 'Lobster', cursive;
+    font-size: clamp(16px, 4vw, 28px);
+    color: #ff0000;
+    text-shadow: 3px 3px 0 #000000, -1px -1px 0 #00ffff;
+    animation: wobble 2s ease-in-out infinite;
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+
+  .team-building-location {
+    font-size: 11px;
+    color: #000080;
+    font-weight: 700;
+    background: #ffff00;
+    display: inline-block;
+    padding: 2px 8px;
+    margin-bottom: 8px;
+    border: 2px dashed #ff0000;
+  }
+
+  .team-building-info {
+    font-family: 'Comic Neue', cursive;
+    font-size: 10px;
+    color: #000080;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .team-countdown {
+    background: #001100;
+    border: 4px solid #00ff00;
+    padding: 8px 4px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .team-countdown::after {
+    content: '⭐ CHECK IN AT 3PM ⭐';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #00ff00;
+    color: #ff00ff;
+    font-size: 8px;
+    padding: 1px 8px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .team-digit-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .team-digit-val {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(24px, 6vw, 48px);
+    font-weight: 700;
+    color: #ffff00;
+    text-shadow: 0 0 8px #ffff00, 2px 2px #ff6600;
+    line-height: 1;
+    min-width: clamp(36px, 10vw, 60px);
+    text-align: center;
+    animation: teamCountGlow 1s ease-in-out infinite alternate;
+    background: #662200;
+    border: 2px solid #ff6600;
+    padding: 4px 2px 2px;
+  }
+
+  @keyframes teamCountGlow {
+    from { text-shadow: 0 0 6px #ffff00, 2px 2px #ff6600; }
+    to { text-shadow: 0 0 16px #ffff00, 2px 2px #ff6600; }
+  }
+
+  .team-digit-label {
+    font-size: 8px;
+    color: #00ff00;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  .team-colon {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(20px, 5vw, 40px);
+    color: #ff00ff;
+    align-self: flex-start;
+    margin-top: 4px;
+    animation: colonBlink 1s step-end infinite;
+    line-height: 1;
+  }
 </style>
 
 <div class="salary-app">
@@ -347,7 +485,7 @@
 
   <div class="title-box">
     <span class="title-main">SALARY COUNTDOWN!!!</span>
-    <span class="title-sub">for night shift warriors 🦇 est. 2026 — made with luv &lt;3</span>
+    <span class="title-sub">for night shift warriors 🦇 est. 2024 — made with luv &lt;3</span>
   </div>
 
   <div class="clipart-row">
@@ -402,11 +540,42 @@
     <div class="timer-dismiss" id="dismissTimer">disappearing in <span id="dismissSeconds">30:00</span> min...</div>
   </div>
 
-  <div class="separator"></div>
 
   <div class="motivational">
     <p id="motivationalText">loading motivational quote from clipart.com...</p>
   </div>
+
+  
+  <div class="separator"></div>
+
+  <div class="team-building-box">
+    <span class="team-building-label">🚀 OPEX TEAM BUILDING 2026 🚀</span>
+    <span class="team-building-location">📍 Sierra Casitas | 🗓️ June 6-7, 2026</span>
+    <div class="team-building-info">Check-in at 3:00 PM • Don't be late or ELSE</div>
+    <div class="team-countdown">
+      <div class="team-digit-block">
+        <div class="team-digit-val" id="teamDays">00</div>
+        <div class="team-digit-label">dayz</div>
+      </div>
+      <div class="team-colon">:</div>
+      <div class="team-digit-block">
+        <div class="team-digit-val" id="teamHours">00</div>
+        <div class="team-digit-label">hourz</div>
+      </div>
+      <div class="team-colon">:</div>
+      <div class="team-digit-block">
+        <div class="team-digit-val" id="teamMinutes">00</div>
+        <div class="team-digit-label">minz</div>
+      </div>
+      <div class="team-colon">:</div>
+      <div class="team-digit-block">
+        <div class="team-digit-val" id="teamSeconds">00</div>
+        <div class="team-digit-label">secz</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="separator"></div>
 
   <span class="visited-text">🔗 Click here for FREE ringtones!!! (not really)</span>
   <span class="visited-text">✉️ This timer is sponsored by pancit canton 💌</span>
@@ -423,7 +592,8 @@
 const quotes = [
   "\"money can't buy happiness\" said no one who's checked their bank account at 4:11AM",
   "A wise man once said: 'Check mo nga kung may pumasok na.'",
-  "surviving on cup noodles and the hope of payday since day one.",
+  "the grind don't sleep. neither do we. send salary pls.",
+  "surviving on iced coffee and the hope of payday since day one.",
   "your bank account is about to go brrrrr real soon bestie 💅",
   "The strongest soldiers are those who survived before cutoff",
   "hustle hard, sleep when? not now. payday when? SOON.",
@@ -631,6 +801,25 @@ function tick() {
 
 tick();
 setInterval(tick, 1000);
+
+function tickTeamBuilding() {
+  const teamBuildingDate = new Date(2026, 5, 6, 15, 0, 0);
+  const now = new Date();
+  const diff = teamBuildingDate.getTime() - now.getTime();
+
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
+  const seconds = Math.floor((diff % 60000) / 1000);
+
+  document.getElementById('teamDays').textContent = pad(Math.max(0, days));
+  document.getElementById('teamHours').textContent = pad(Math.max(0, hours));
+  document.getElementById('teamMinutes').textContent = pad(Math.max(0, minutes));
+  document.getElementById('teamSeconds').textContent = pad(Math.max(0, seconds));
+}
+
+tickTeamBuilding();
+setInterval(tickTeamBuilding, 1000);
 
 let visits = 69420;
 setInterval(() => {
