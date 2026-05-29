@@ -1,0 +1,642 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Lobster&family=Oswald:wght@700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body, .salary-app {
+    background: #000080;
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .salary-app {
+    padding: 8px;
+    position: relative;
+  }
+
+  .marquee-wrap {
+    background: #ff0000;
+    border: 4px solid #ffff00;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 4px 0;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 12s linear infinite;
+    font-size: 14px;
+    color: #ffff00;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  @keyframes marquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+
+  .title-box {
+    background: linear-gradient(135deg, #ff00ff, #00ffff, #ffff00, #ff6600);
+    border: 6px dashed #ff0000;
+    text-align: center;
+    padding: 10px 6px 6px;
+    margin: 6px 0;
+    position: relative;
+    animation: borderPulse 1s infinite;
+  }
+
+  @keyframes borderPulse {
+    0%, 100% { border-color: #ff0000; }
+    33% { border-color: #00ff00; }
+    66% { border-color: #ffff00; }
+  }
+
+  .title-main {
+    font-family: 'Lobster', cursive;
+    font-size: clamp(20px, 5vw, 36px);
+    color: #000080;
+    text-shadow: 3px 3px 0 #ff0000, -1px -1px 0 #ffff00;
+    line-height: 1.1;
+    animation: wobble 2s ease-in-out infinite;
+    display: block;
+  }
+
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg); }
+  }
+
+  .title-sub {
+    font-size: 10px;
+    color: #000000;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #ffff00;
+    display: inline-block;
+    padding: 1px 6px;
+    margin-top: 2px;
+  }
+
+  .clipart-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 4px 0;
+    font-size: 24px;
+  }
+
+  .spin { animation: spin 2s linear infinite; display: inline-block; }
+  .bounce { animation: bounceAnim 0.8s ease-in-out infinite; display: inline-block; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes bounceAnim { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  .next-pay-box {
+    background: #ff6600;
+    border: 5px solid #00ff00;
+    padding: 8px;
+    margin: 4px 0;
+    text-align: center;
+  }
+
+  .next-pay-label {
+    font-size: 11px;
+    color: #ffff00;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .next-pay-date {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(14px, 4vw, 22px);
+    color: #ffffff;
+    text-shadow: 2px 2px #000000;
+    margin-top: 2px;
+  }
+
+  .countdown-wrapper {
+    background: #000000;
+    border: 4px solid #ff00ff;
+    padding: 10px 6px;
+    margin: 4px 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .countdown-wrapper::before {
+    content: '⭐ LIVE COUNTDOWN ⭐';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff00ff;
+    color: #ffff00;
+    font-size: 9px;
+    padding: 1px 8px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .digits-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3px;
+    flex-wrap: wrap;
+  }
+
+  .digit-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .digit-val {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(28px, 8vw, 56px);
+    font-weight: 700;
+    color: #00ff00;
+    text-shadow: 0 0 8px #00ff00, 2px 2px #004400;
+    line-height: 1;
+    min-width: clamp(44px, 12vw, 80px);
+    text-align: center;
+    animation: countGlow 1s ease-in-out infinite alternate;
+    background: #001100;
+    border: 2px solid #00ff00;
+    padding: 4px 2px 2px;
+  }
+
+  @keyframes countGlow {
+    from { text-shadow: 0 0 6px #00ff00, 2px 2px #004400; }
+    to { text-shadow: 0 0 20px #00ff00, 2px 2px #004400; }
+  }
+
+  .digit-label {
+    font-size: 9px;
+    color: #ff00ff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  .colon {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(24px, 7vw, 48px);
+    color: #ffff00;
+    align-self: flex-start;
+    margin-top: 6px;
+    animation: colonBlink 1s step-end infinite;
+    line-height: 1;
+  }
+
+  @keyframes colonBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  .motivational {
+    background: #9900cc;
+    border: 3px solid #ffff00;
+    padding: 6px;
+    margin: 4px 0;
+    text-align: center;
+  }
+
+  .motivational p {
+    font-size: clamp(10px, 2.5vw, 14px);
+    color: #ffffff;
+    font-weight: 700;
+    animation: colorCycle 3s linear infinite;
+    line-height: 1.4;
+  }
+
+  @keyframes colorCycle {
+    0% { color: #ffffff; } 20% { color: #ffff00; }
+    40% { color: #00ffff; } 60% { color: #ff99ff; }
+    80% { color: #99ff99; } 100% { color: #ffffff; }
+  }
+
+  .visited-text {
+    font-size: 9px;
+    color: #00ffff;
+    text-decoration: underline;
+    cursor: default;
+    display: block;
+    text-align: center;
+    margin: 2px 0;
+  }
+
+  .separator {
+    border: 3px dashed #ff6600;
+    margin: 4px 0;
+    animation: borderPulse 2s infinite;
+  }
+
+  .salary-arrived {
+    display: none;
+    background: #ffff00;
+    border: 6px solid #ff0000;
+    padding: 10px;
+    margin: 4px 0;
+    text-align: center;
+    animation: arrived 0.5s ease infinite alternate;
+    position: relative;
+  }
+
+  @keyframes arrived {
+    from { transform: scale(1); box-shadow: 0 0 0 #ff0000; }
+    to { transform: scale(1.02); box-shadow: 0 0 20px #ff0000; }
+  }
+
+  .arrived-title {
+    font-family: 'Lobster', cursive;
+    font-size: clamp(18px, 5vw, 32px);
+    color: #ff0000;
+    text-shadow: 2px 2px #000000;
+    animation: wobble 0.4s ease-in-out infinite;
+    display: block;
+  }
+
+  .arrived-sub {
+    font-size: clamp(10px, 2.5vw, 14px);
+    color: #000080;
+    font-weight: 700;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .confetti-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: confettiFall linear forwards;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  .star-burst {
+    position: fixed;
+    font-size: 40px;
+    pointer-events: none;
+    z-index: 9998;
+    animation: starPop 1s ease-out forwards;
+    display: none;
+  }
+
+  @keyframes starPop {
+    0% { transform: scale(0) rotate(0deg); opacity: 1; }
+    50% { transform: scale(2) rotate(180deg); opacity: 1; }
+    100% { transform: scale(0) rotate(360deg); opacity: 0; }
+  }
+
+  .footer-gif {
+    text-align: center;
+    font-size: 20px;
+    background: #004400;
+    padding: 4px;
+    border: 2px solid #00ff00;
+    animation: footerPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes footerPulse {
+    0%, 100% { background: #004400; }
+    50% { background: #001100; }
+  }
+
+  .under-construction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: #ffcc00;
+    padding: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #000000;
+    border: 2px solid #ff6600;
+  }
+
+  .uc-stripe { font-size: 14px; }
+
+  .timer-dismiss {
+    font-size: 9px;
+    color: #888;
+    text-align: center;
+    margin-top: 4px;
+    display: none;
+  }
+</style>
+
+<div class="salary-app">
+
+  <div class="confetti-container" id="confettiContainer"></div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-inner">💰 SALARY TRACKER 2000™ &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 💰 BEST VIEWED IN INTERNET EXPLORER 6 &nbsp;&nbsp;&nbsp; ★ THIS SITE IS UNDER CONSTRUCTION ★ &nbsp;&nbsp;&nbsp; 💰 FREE COUNTER: <span id="pageViews">1</span> VISITORS &nbsp;&nbsp;&nbsp; ★ GRAPHIC DESIGN IS MY PASSION ★ &nbsp;&nbsp;&nbsp;</div>
+  </div>
+
+  <div class="title-box">
+    <span class="title-main">SALARY COUNTDOWN!!!</span>
+    <span class="title-sub">for night shift warriors 🦇 est. 2024 — made with luv &lt;3</span>
+  </div>
+
+  <div class="clipart-row">
+    <span class="bounce">💰</span>
+    <span class="spin">⭐</span>
+    <span class="bounce">🤑</span>
+    <span class="spin">💫</span>
+    <span class="bounce">💸</span>
+    <span class="spin">⭐</span>
+    <span class="bounce">💰</span>
+  </div>
+
+  <div class="under-construction">
+    <span class="uc-stripe">🚧</span>
+    <span>THIS PAGE IS UNDER CONSTRUCTION — PLEASE STAND BY</span>
+    <span class="uc-stripe">🚧</span>
+  </div>
+
+  <div class="next-pay-box">
+    <div class="next-pay-label">✨ next payday is: ✨</div>
+    <div class="next-pay-date" id="nextPayDisplay">calculating...</div>
+  </div>
+
+  <div class="countdown-wrapper">
+    <div class="digits-row">
+      <div class="digit-block">
+        <div class="digit-val" id="days">00</div>
+        <div class="digit-label">dayz</div>
+      </div>
+      <div class="colon">:</div>
+      <div class="digit-block">
+        <div class="digit-val" id="hours">00</div>
+        <div class="digit-label">hourz</div>
+      </div>
+      <div class="colon">:</div>
+      <div class="digit-block">
+        <div class="digit-val" id="minutes">00</div>
+        <div class="digit-label">minz</div>
+      </div>
+      <div class="colon">:</div>
+      <div class="digit-block">
+        <div class="digit-val" id="seconds">00</div>
+        <div class="digit-label">secz</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="salary-arrived" id="salaryArrived">
+    <span class="arrived-title">💰 SALAAARY ARRIVED!!! 💰</span>
+    <span class="arrived-sub">CHECK YOUR BANK ACCOUNT RIGHT NOW OMG!!!</span>
+    <span class="arrived-sub" id="arrivedTime" style="font-size:10px; color:#333;"></span>
+    <div class="timer-dismiss" id="dismissTimer">disappearing in <span id="dismissSeconds">30:00</span> min...</div>
+  </div>
+
+  <div class="separator"></div>
+
+  <div class="motivational">
+    <p id="motivationalText">loading motivational quote from clipart.com...</p>
+  </div>
+
+  <span class="visited-text">🔗 Click here for FREE ringtones!!! (not really)</span>
+  <span class="visited-text">✉️ This timer is sponsored by pancit canton 💌</span>
+
+  <div class="footer-gif">
+    <span class="spin" style="display:inline-block">🌟</span>
+    SALAMAT SA IYONG PAGBISITA — THANK U 4 VISITING — COME BACK SOON
+    <span class="spin" style="display:inline-block">🌟</span>
+  </div>
+
+</div>
+
+<script>
+const quotes = [
+  "\"money can't buy happiness\" said no one who's checked their bank account at 4:11AM",
+  "A wise man once said: 'Check mo nga kung may pumasok na.'",
+  "the grind don't sleep. neither do we. send salary pls.",
+  "surviving on iced coffee and the hope of payday since day one.",
+  "your bank account is about to go brrrrr real soon bestie 💅",
+  "The strongest soldiers are those who survived before cutoff",
+  "hustle hard, sleep when? not now. payday when? SOON.",
+  "Money cannot buy happiness, but payroll notification comes very close.",
+  "A funded GCash changes a person",
+  "night shift hits different when u know pay is coming fr fr no cap",
+];
+
+let motivIdx = 0;
+function cycleQuote() {
+  document.getElementById('motivationalText').textContent = quotes[motivIdx % quotes.length];
+  motivIdx++;
+}
+cycleQuote();
+setInterval(cycleQuote, 5000);
+
+function getNextPayday() {
+  const now = new Date();
+  const manilaOffset = 8 * 60;
+  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+  const manilaTime = new Date(utcMs + manilaOffset * 60000);
+
+  function getPayDateInManila(year, month, day) {
+    const d = new Date(year, month, day);
+    const dow = d.getDay();
+    if (dow === 6) return new Date(year, month, day - 1);
+    if (dow === 0) return new Date(year, month, day - 2);
+    return d;
+  }
+
+  function getPayMoment(year, month, day) {
+    const pd = getPayDateInManila(year, month, day);
+    return new Date(Date.UTC(pd.getFullYear(), pd.getMonth(), pd.getDate(), 4 - 8, 11, 0) + 8 * 3600000);
+  }
+
+  const y = manilaTime.getFullYear();
+  const m = manilaTime.getMonth();
+
+  const candidates = [
+    getPayMoment(y, m - 1, 30),
+    getPayMoment(y, m - 1, 15),
+    getPayMoment(y, m, 15),
+    getPayMoment(y, m, 30),
+    getPayMoment(y, m + 1, 15),
+    getPayMoment(y, m + 1, 30),
+    getPayMoment(y, m + 2, 15),
+  ];
+
+  const nowUTC = now.getTime();
+  const THIRTY_MIN = 30 * 60 * 1000;
+
+  for (const pd of candidates) {
+    const diff = pd.getTime() - nowUTC;
+    if (diff > -THIRTY_MIN) return pd;
+  }
+  return candidates[candidates.length - 1];
+}
+
+function formatPayday(payMoment) {
+  const options = { timeZone: 'Asia/Manila', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const dateStr = payMoment.toLocaleDateString('en-PH', options);
+  return dateStr + ' at 4:11 AM';
+}
+
+let celebrationActive = false;
+let dismissTimeout = null;
+let dismissInterval = null;
+
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  container.style.display = 'block';
+  container.innerHTML = '';
+  const colors = ['#ff0000','#ffff00','#00ff00','#ff00ff','#00ffff','#ff6600','#0000ff','#ffffff'];
+  const emojis = ['💰','💸','🤑','⭐','✨','🎉','🎊'];
+
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    piece.style.animationDelay = Math.random() * 1.5 + 's';
+    if (Math.random() > 0.5) {
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    } else {
+      piece.style.background = 'transparent';
+      piece.style.fontSize = '16px';
+      piece.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    }
+    container.appendChild(piece);
+  }
+
+  const stars = ['💥','🌟','✨','🎊'];
+  for (let s = 0; s < 5; s++) {
+    const star = document.createElement('div');
+    star.className = 'star-burst';
+    star.style.top = (20 + Math.random() * 60) + 'vh';
+    star.style.left = (10 + Math.random() * 80) + 'vw';
+    star.style.animationDelay = (Math.random() * 1) + 's';
+    star.style.display = 'block';
+    star.textContent = stars[Math.floor(Math.random() * stars.length)];
+    document.body.appendChild(star);
+    setTimeout(() => star.remove(), 2000);
+  }
+
+  setTimeout(() => { container.style.display = 'none'; container.innerHTML = ''; }, 5000);
+}
+
+function showSalaryArrived(payMoment) {
+  const box = document.getElementById('salaryArrived');
+  const dismissEl = document.getElementById('dismissTimer');
+  const dismissSec = document.getElementById('dismissSeconds');
+  const arrivedTime = document.getElementById('arrivedTime');
+
+  arrivedTime.textContent = '(arrived: ' + payMoment.toLocaleTimeString('en-PH', { timeZone: 'Asia/Manila', hour: '2-digit', minute: '2-digit' }) + ' Manila time)';
+  box.style.display = 'block';
+  dismissEl.style.display = 'block';
+
+  let remaining = 30 * 60;
+  function updateDismiss() {
+    const m = Math.floor(remaining / 60);
+    const s = remaining % 60;
+    dismissSec.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    if (remaining <= 0) {
+      box.style.display = 'none';
+      clearInterval(dismissInterval);
+    }
+    remaining--;
+  }
+  updateDismiss();
+  if (dismissInterval) clearInterval(dismissInterval);
+  dismissInterval = setInterval(updateDismiss, 1000);
+}
+
+function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
+
+function tick() {
+  const nextPay = getNextPayday();
+  const now = Date.now();
+  const diff = nextPay.getTime() - now;
+  const THIRTY_MIN = 30 * 60 * 1000;
+
+  document.getElementById('nextPayDisplay').textContent = formatPayday(nextPay);
+
+  if (diff <= 0 && diff > -THIRTY_MIN) {
+    if (!celebrationActive) {
+      celebrationActive = true;
+      launchConfetti();
+      showSalaryArrived(nextPay);
+      setTimeout(() => { launchConfetti(); }, 2500);
+      setTimeout(() => { launchConfetti(); }, 5000);
+    }
+    const nextNextPay = (() => {
+      const after = new Date(nextPay.getTime() + 60 * 60 * 1000);
+      const tempNow = after;
+      const manilaOffset = 8 * 60;
+      const utcMs = tempNow.getTime() + tempNow.getTimezoneOffset() * 60000;
+      const manilaTime = new Date(utcMs + manilaOffset * 60000);
+      const y = manilaTime.getFullYear(), m = manilaTime.getMonth();
+
+      function gpd(year, month, day) {
+        const d = new Date(year, month, day);
+        const dow = d.getDay();
+        if (dow === 6) return new Date(year, month, day - 1);
+        if (dow === 0) return new Date(year, month, day - 2);
+        return d;
+      }
+      function gpm(year, month, day) {
+        const pd = gpd(year, month, day);
+        return new Date(Date.UTC(pd.getFullYear(), pd.getMonth(), pd.getDate(), 4 - 8, 11, 0) + 8 * 3600000);
+      }
+
+      const candidates = [
+        gpm(y, m, 15), gpm(y, m, 30),
+        gpm(y, m + 1, 15), gpm(y, m + 1, 30),
+        gpm(y, m + 2, 15),
+      ];
+      for (const c of candidates) {
+        if (c.getTime() > nextPay.getTime() + 60000) return c;
+      }
+      return candidates[candidates.length - 1];
+    })();
+
+    const d2 = nextNextPay.getTime() - now;
+    const td = Math.max(0, Math.floor(d2 / 86400000));
+    const th = Math.max(0, Math.floor((d2 % 86400000) / 3600000));
+    const tm = Math.max(0, Math.floor((d2 % 3600000) / 60000));
+    const ts = Math.max(0, Math.floor((d2 % 60000) / 1000));
+    document.getElementById('days').textContent = pad(td);
+    document.getElementById('hours').textContent = pad(th);
+    document.getElementById('minutes').textContent = pad(tm);
+    document.getElementById('seconds').textContent = pad(ts);
+  } else {
+    if (diff > 0) celebrationActive = false;
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('days').textContent = pad(d);
+    document.getElementById('hours').textContent = pad(h);
+    document.getElementById('minutes').textContent = pad(m);
+    document.getElementById('seconds').textContent = pad(s);
+  }
+}
+
+tick();
+setInterval(tick, 1000);
+
+let visits = 69420;
+setInterval(() => {
+  visits += Math.floor(Math.random() * 3);
+  const el = document.getElementById('pageViews');
+  if (el) el.textContent = visits.toLocaleString();
+}, 3000);
+</script>
