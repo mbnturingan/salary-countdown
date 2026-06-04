@@ -1,491 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salary Tracker 2000</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght=700&family=Lobster&family=Oswald:wght=700&display=swap');
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Lobster&family=Oswald:wght@700&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    body, .salary-app {
+      background: #000080;
+      font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  body, .salary-app {
-    background: #000080;
-    font-family: 'Comic Neue', 'Comic Sans MS', cursive;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+    .salary-app {
+      padding: 8px;
+      position: relative;
+    }
 
-  .salary-app {
-    padding: 8px;
-    position: relative;
-  }
+    .marquee-wrap {
+      background: #ff0000;
+      border: 4px solid #ffff00;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 4px 0;
+    }
 
-  .marquee-wrap {
-    background: #ff0000;
-    border: 4px solid #ffff00;
-    overflow: hidden;
-    white-space: nowrap;
-    padding: 4px 0;
-  }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 12s linear infinite;
+      font-size: 14px;
+      color: #ffff00;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
 
-  .marquee-inner {
-    display: inline-block;
-    animation: marquee 12s linear infinite;
-    font-size: 14px;
-    color: #ffff00;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
+    @keyframes marquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-  @keyframes marquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+    .title-box {
+      background: linear-gradient(135deg, #ff00ff, #00ffff, #ffff00, #ff6600);
+      border: 6px dashed #ff0000;
+      text-align: center;
+      padding: 10px 6px 6px;
+      margin: 6px 0;
+      position: relative;
+      animation: borderPulse 1s infinite;
+    }
 
-  .title-box {
-    background: linear-gradient(135deg, #ff00ff, #00ffff, #ffff00, #ff6600);
-    border: 6px dashed #ff0000;
-    text-align: center;
-    padding: 10px 6px 6px;
-    margin: 6px 0;
-    position: relative;
-    animation: borderPulse 1s infinite;
-  }
+    @keyframes borderPulse {
+      0%, 100% { border-color: #ff0000; }
+      33% { border-color: #00ff00; }
+      66% { border-color: #ffff00; }
+    }
 
-  @keyframes borderPulse {
-    0%, 100% { border-color: #ff0000; }
-    33% { border-color: #00ff00; }
-    66% { border-color: #ffff00; }
-  }
+    .title-main {
+      font-family: 'Lobster', cursive;
+      font-size: clamp(20px, 5vw, 36px);
+      color: #000080;
+      text-shadow: 3px 3px 0 #ff0000, -1px -1px 0 #ffff00;
+      line-height: 1.1;
+      animation: wobble 2s ease-in-out infinite;
+      display: block;
+    }
 
-  .title-main {
-    font-family: 'Lobster', cursive;
-    font-size: clamp(20px, 5vw, 36px);
-    color: #000080;
-    text-shadow: 3px 3px 0 #ff0000, -1px -1px 0 #ffff00;
-    line-height: 1.1;
-    animation: wobble 2s ease-in-out infinite;
-    display: block;
-  }
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-1deg); }
+      50% { transform: rotate(1deg); }
+    }
 
-  @keyframes wobble {
-    0%, 100% { transform: rotate(-1deg); }
-    50% { transform: rotate(1deg); }
-  }
+    .title-sub {
+      font-size: 10px;
+      color: #000000;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: #ffff00;
+      display: inline-block;
+      padding: 1px 6px;
+      margin-top: 2px;
+    }
 
-  .title-sub {
-    font-size: 10px;
-    color: #000000;
-    font-weight: 700;
-    text-transform: uppercase;
-    background: #ffff00;
-    display: inline-block;
-    padding: 1px 6px;
-    margin-top: 2px;
-  }
+    .clipart-row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 4px 0;
+      font-size: 24px;
+    }
 
-  .clipart-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 4px 0;
-    font-size: 24px;
-  }
+    .spin { animation: spin 2s linear infinite; display: inline-block; }
+    .bounce { animation: bounceAnim 0.8s ease-in-out infinite; display: inline-block; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes bounceAnim { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-  .spin { animation: spin 2s linear infinite; display: inline-block; }
-  .bounce { animation: bounceAnim 0.8s ease-in-out infinite; display: inline-block; }
-  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  @keyframes bounceAnim { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .next-pay-box {
+      background: #ff6600;
+      border: 5px solid #00ff00;
+      padding: 8px;
+      margin: 4px 0;
+      text-align: center;
+    }
 
-  .next-pay-box {
-    background: #ff6600;
-    border: 5px solid #00ff00;
-    padding: 8px;
-    margin: 4px 0;
-    text-align: center;
-  }
+    .next-pay-label {
+      font-size: 11px;
+      color: #ffff00;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
 
-  .next-pay-label {
-    font-size: 11px;
-    color: #ffff00;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 2px;
-  }
+    .next-pay-date {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(14px, 4vw, 22px);
+      color: #ffffff;
+      text-shadow: 2px 2px #000000;
+      margin-top: 2px;
+    }
 
-  .next-pay-date {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(14px, 4vw, 22px);
-    color: #ffffff;
-    text-shadow: 2px 2px #000000;
-    margin-top: 2px;
-  }
+    .countdown-wrapper {
+      background: #000000;
+      border: 4px solid #ff00ff;
+      padding: 10px 6px;
+      margin: 4px 0;
+      text-align: center;
+      position: relative;
+    }
 
-  .countdown-wrapper {
-    background: #000000;
-    border: 4px solid #ff00ff;
-    padding: 10px 6px;
-    margin: 4px 0;
-    text-align: center;
-    position: relative;
-  }
+    .countdown-wrapper::before {
+      content: '⭐ LIVE COUNTDOWN ⭐';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff00ff;
+      color: #ffff00;
+      font-size: 9px;
+      padding: 1px 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
 
-  .countdown-wrapper::before {
-    content: '⭐ LIVE COUNTDOWN ⭐';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ff00ff;
-    color: #ffff00;
-    font-size: 9px;
-    padding: 1px 8px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
+    .digits-row {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 3px;
+      flex-wrap: wrap;
+    }
 
-  .digits-row {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 3px;
-    flex-wrap: wrap;
-  }
+    .digit-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  .digit-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    .digit-val {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(28px, 8vw, 56px);
+      font-weight: 700;
+      color: #00ff00;
+      text-shadow: 0 0 8px #00ff00, 2px 2px #004400;
+      line-height: 1;
+      min-width: clamp(44px, 12vw, 80px);
+      text-align: center;
+      animation: countGlow 1s ease-in-out infinite alternate;
+      background: #001100;
+      border: 2px solid #00ff00;
+      padding: 4px 2px 2px;
+    }
 
-  .digit-val {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(28px, 8vw, 56px);
-    font-weight: 700;
-    color: #00ff00;
-    text-shadow: 0 0 8px #00ff00, 2px 2px #004400;
-    line-height: 1;
-    min-width: clamp(44px, 12vw, 80px);
-    text-align: center;
-    animation: countGlow 1s ease-in-out infinite alternate;
-    background: #001100;
-    border: 2px solid #00ff00;
-    padding: 4px 2px 2px;
-  }
+    @keyframes countGlow {
+      from { text-shadow: 0 0 6px #00ff00, 2px 2px #004400; }
+      to { text-shadow: 0 0 20px #00ff00, 2px 2px #004400; }
+    }
 
-  @keyframes countGlow {
-    from { text-shadow: 0 0 6px #00ff00, 2px 2px #004400; }
-    to { text-shadow: 0 0 20px #00ff00, 2px 2px #004400; }
-  }
+    .digit-label {
+      font-size: 9px;
+      color: #ff00ff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
 
-  .digit-label {
-    font-size: 9px;
-    color: #ff00ff;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 2px;
-  }
+    .colon {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(24px, 7vw, 48px);
+      color: #ffff00;
+      align-self: flex-start;
+      margin-top: 6px;
+      animation: colonBlink 1s step-end infinite;
+      line-height: 1;
+    }
 
-  .colon {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(24px, 7vw, 48px);
-    color: #ffff00;
-    align-self: flex-start;
-    margin-top: 6px;
-    animation: colonBlink 1s step-end infinite;
-    line-height: 1;
-  }
+    @keyframes colonBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  @keyframes colonBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .motivational {
+      background: #9900cc;
+      border: 3px solid #ffff00;
+      padding: 6px;
+      margin: 4px 0;
+      text-align: center;
+    }
 
-  .motivational {
-    background: #9900cc;
-    border: 3px solid #ffff00;
-    padding: 6px;
-    margin: 4px 0;
-    text-align: center;
-  }
+    .motivational p {
+      font-size: clamp(10px, 2.5vw, 14px);
+      color: #ffffff;
+      font-weight: 700;
+      animation: colorCycle 3s linear infinite;
+      line-height: 1.4;
+    }
 
-  .motivational p {
-    font-size: clamp(10px, 2.5vw, 14px);
-    color: #ffffff;
-    font-weight: 700;
-    animation: colorCycle 3s linear infinite;
-    line-height: 1.4;
-  }
+    @keyframes colorCycle {
+      0% { color: #ffffff; } 20% { color: #ffff00; }
+      40% { color: #00ffff; } 60% { color: #ff99ff; }
+      80% { color: #99ff99; } 100% { color: #ffffff; }
+    }
 
-  @keyframes colorCycle {
-    0% { color: #ffffff; } 20% { color: #ffff00; }
-    40% { color: #00ffff; } 60% { color: #ff99ff; }
-    80% { color: #99ff99; } 100% { color: #ffffff; }
-  }
+    .visited-text {
+      font-size: 9px;
+      color: #00ffff;
+      text-decoration: underline;
+      cursor: default;
+      display: block;
+      text-align: center;
+      margin: 2px 0;
+    }
 
-  .visited-text {
-    font-size: 9px;
-    color: #00ffff;
-    text-decoration: underline;
-    cursor: default;
-    display: block;
-    text-align: center;
-    margin: 2px 0;
-  }
+    .separator {
+      border: 3px dashed #ff6600;
+      margin: 4px 0;
+      animation: borderPulse 2s infinite;
+    }
 
-  .separator {
-    border: 3px dashed #ff6600;
-    margin: 4px 0;
-    animation: borderPulse 2s infinite;
-  }
+    .salary-arrived {
+      display: none;
+      background: #ffff00;
+      border: 6px solid #ff0000;
+      padding: 10px;
+      margin: 4px 0;
+      text-align: center;
+      animation: arrived 0.5s ease infinite alternate;
+      position: relative;
+    }
 
-  .salary-arrived {
-    display: none;
-    background: #ffff00;
-    border: 6px solid #ff0000;
-    padding: 10px;
-    margin: 4px 0;
-    text-align: center;
-    animation: arrived 0.5s ease infinite alternate;
-    position: relative;
-  }
+    @keyframes arrived {
+      from { transform: scale(1); box-shadow: 0 0 0 #ff0000; }
+      to { transform: scale(1.02); box-shadow: 0 0 20px #ff0000; }
+    }
 
-  @keyframes arrived {
-    from { transform: scale(1); box-shadow: 0 0 0 #ff0000; }
-    to { transform: scale(1.02); box-shadow: 0 0 20px #ff0000; }
-  }
+    .arrived-title {
+      font-family: 'Lobster', cursive;
+      font-size: clamp(18px, 5vw, 32px);
+      color: #ff0000;
+      text-shadow: 2px 2px #000000;
+      animation: wobble 0.4s ease-in-out infinite;
+      display: block;
+    }
 
-  .arrived-title {
-    font-family: 'Lobster', cursive;
-    font-size: clamp(18px, 5vw, 32px);
-    color: #ff0000;
-    text-shadow: 2px 2px #000000;
-    animation: wobble 0.4s ease-in-out infinite;
-    display: block;
-  }
+    .arrived-sub {
+      font-size: clamp(10px, 2.5vw, 14px);
+      color: #000080;
+      font-weight: 700;
+      margin-top: 4px;
+      display: block;
+    }
 
-  .arrived-sub {
-    font-size: clamp(10px, 2.5vw, 14px);
-    color: #000080;
-    font-weight: 700;
-    margin-top: 4px;
-    display: block;
-  }
+    .confetti-container {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+    }
 
-  .confetti-container {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 9999;
-    display: none;
-  }
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: confettiFall linear forwards;
+    }
 
-  .confetti-piece {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    top: -10px;
-    animation: confettiFall linear forwards;
-  }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
 
-  @keyframes confettiFall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-  }
+    .star-burst {
+      position: fixed;
+      font-size: 40px;
+      pointer-events: none;
+      z-index: 9998;
+      animation: starPop 1s ease-out forwards;
+      display: none;
+    }
 
-  .star-burst {
-    position: fixed;
-    font-size: 40px;
-    pointer-events: none;
-    z-index: 9998;
-    animation: starPop 1s ease-out forwards;
-    display: none;
-  }
+    @keyframes starPop {
+      0% { transform: scale(0) rotate(0deg); opacity: 1; }
+      50% { transform: scale(2) rotate(180deg); opacity: 1; }
+      100% { transform: scale(0) rotate(360deg); opacity: 0; }
+    }
 
-  @keyframes starPop {
-    0% { transform: scale(0) rotate(0deg); opacity: 1; }
-    50% { transform: scale(2) rotate(180deg); opacity: 1; }
-    100% { transform: scale(0) rotate(360deg); opacity: 0; }
-  }
+    .footer-gif {
+      text-align: center;
+      font-size: 20px;
+      background: #004400;
+      padding: 4px;
+      border: 2px solid #00ff00;
+      animation: footerPulse 1.5s ease-in-out infinite;
+    }
 
-  .footer-gif {
-    text-align: center;
-    font-size: 20px;
-    background: #004400;
-    padding: 4px;
-    border: 2px solid #00ff00;
-    animation: footerPulse 1.5s ease-in-out infinite;
-  }
+    @keyframes footerPulse {
+      0%, 100% { background: #004400; }
+      50% { background: #001100; }
+    }
 
-  @keyframes footerPulse {
-    0%, 100% { background: #004400; }
-    50% { background: #001100; }
-  }
+    .under-construction {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: #ffcc00;
+      padding: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #000000;
+      border: 2px solid #ff6600;
+    }
 
-  .under-construction {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    background: #ffcc00;
-    padding: 3px;
-    font-size: 10px;
-    font-weight: 700;
-    color: #000000;
-    border: 2px solid #ff6600;
-  }
+    .uc-stripe { font-size: 14px; }
 
-  .uc-stripe { font-size: 14px; }
+    .timer-dismiss {
+      font-size: 9px;
+      color: #888;
+      text-align: center;
+      margin-top: 4px;
+      display: none;
+    }
 
-  .timer-dismiss {
-    font-size: 9px;
-    color: #888;
-    text-align: center;
-    margin-top: 4px;
-    display: none;
-  }
+    .team-building-box {
+      background: linear-gradient(45deg, #00ff00, #ffff00);
+      border: 8px solid #ff00ff;
+      padding: 12px;
+      margin: 6px 0;
+      text-align: center;
+      position: relative;
+      animation: teamBuildingPulse 1.2s ease-in-out infinite;
+      box-shadow: 0 0 20px #ff00ff;
+    }
 
-  .team-building-box {
-    background: linear-gradient(45deg, #00ff00, #ffff00);
-    border: 8px solid #ff00ff;
-    padding: 12px;
-    margin: 6px 0;
-    text-align: center;
-    position: relative;
-    animation: teamBuildingPulse 1.2s ease-in-out infinite;
-    box-shadow: 0 0 20px #ff00ff;
-  }
+    @keyframes teamBuildingPulse {
+      0%, 100% { box-shadow: 0 0 10px #ff00ff; }
+      50% { box-shadow: 0 0 30px #00ff00, inset 0 0 20px rgba(255, 0, 255, 0.5); }
+    }
 
-  @keyframes teamBuildingPulse {
-    0%, 100% { box-shadow: 0 0 10px #ff00ff; }
-    50% { box-shadow: 0 0 30px #00ff00, inset 0 0 20px rgba(255, 0, 255, 0.5); }
-  }
+    .team-building-box::before {
+      content: '🎉 TEAM BUILDING EVENT 🎉';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff00ff;
+      color: #ffff00;
+      font-size: 11px;
+      padding: 2px 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 2px solid #00ff00;
+      animation: teamBuildingBounce 0.8s ease-in-out infinite;
+    }
 
-  .team-building-box::before {
-    content: '🎉 TEAM BUILDING EVENT 🎉';
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ff00ff;
-    color: #ffff00;
-    font-size: 11px;
-    padding: 2px 12px;
-    font-weight: 700;
-    white-space: nowrap;
-    border: 2px solid #00ff00;
-    animation: teamBuildingBounce 0.8s ease-in-out infinite;
-  }
+    @keyframes teamBuildingBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-4px); }
+    }
 
-  @keyframes teamBuildingBounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-4px); }
-  }
+    .team-building-label {
+      font-family: 'Lobster', cursive;
+      font-size: clamp(16px, 4vw, 28px);
+      color: #ff0000;
+      text-shadow: 3px 3px 0 #000000, -1px -1px 0 #00ffff;
+      animation: wobble 2s ease-in-out infinite;
+      display: block;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
 
-  .team-building-label {
-    font-family: 'Lobster', cursive;
-    font-size: clamp(16px, 4vw, 28px);
-    color: #ff0000;
-    text-shadow: 3px 3px 0 #000000, -1px -1px 0 #00ffff;
-    animation: wobble 2s ease-in-out infinite;
-    display: block;
-    margin-bottom: 8px;
-    letter-spacing: 2px;
-  }
+    .team-building-location {
+      font-size: 11px;
+      color: #000080;
+      font-weight: 700;
+      background: #ffff00;
+      display: inline-block;
+      padding: 2px 8px;
+      margin-bottom: 8px;
+      border: 2px dashed #ff0000;
+    }
 
-  .team-building-location {
-    font-size: 11px;
-    color: #000080;
-    font-weight: 700;
-    background: #ffff00;
-    display: inline-block;
-    padding: 2px 8px;
-    margin-bottom: 8px;
-    border: 2px dashed #ff0000;
-  }
+    .team-building-info {
+      font-family: 'Comic Neue', cursive;
+      font-size: 10px;
+      color: #000080;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
 
-  .team-building-info {
-    font-family: 'Comic Neue', cursive;
-    font-size: 10px;
-    color: #000080;
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
+    .team-countdown {
+      background: #001100;
+      border: 4px solid #00ff00;
+      padding: 8px 4px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2px;
+      flex-wrap: wrap;
+      position: relative;
+    }
 
-  .team-countdown {
-    background: #001100;
-    border: 4px solid #00ff00;
-    padding: 8px 4px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2px;
-    flex-wrap: wrap;
-    position: relative;
-  }
+    .team-countdown::after {
+      content: '⭐ CHECK IN AT 3PM ⭐';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #00ff00;
+      color: #ff00ff;
+      font-size: 8px;
+      padding: 1px 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
 
-  .team-countdown::after {
-    content: '⭐ CHECK IN AT 3PM ⭐';
-    position: absolute;
-    bottom: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #00ff00;
-    color: #ff00ff;
-    font-size: 8px;
-    padding: 1px 8px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
+    .team-digit-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  .team-digit-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    .team-digit-val {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(24px, 6vw, 48px);
+      font-weight: 700;
+      color: #ffff00;
+      text-shadow: 0 0 8px #ffff00, 2px 2px #ff6600;
+      line-height: 1;
+      min-width: clamp(36px, 10vw, 60px);
+      text-align: center;
+      animation: teamCountGlow 1s ease-in-out infinite alternate;
+      background: #662200;
+      border: 2px solid #ff6600;
+      padding: 4px 2px 2px;
+    }
 
-  .team-digit-val {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(24px, 6vw, 48px);
-    font-weight: 700;
-    color: #ffff00;
-    text-shadow: 0 0 8px #ffff00, 2px 2px #ff6600;
-    line-height: 1;
-    min-width: clamp(36px, 10vw, 60px);
-    text-align: center;
-    animation: teamCountGlow 1s ease-in-out infinite alternate;
-    background: #662200;
-    border: 2px solid #ff6600;
-    padding: 4px 2px 2px;
-  }
+    @keyframes teamCountGlow {
+      from { text-shadow: 0 0 6px #ffff00, 2px 2px #ff6600; }
+      to { text-shadow: 0 0 16px #ffff00, 2px 2px #ff6600; }
+    }
 
-  @keyframes teamCountGlow {
-    from { text-shadow: 0 0 6px #ffff00, 2px 2px #ff6600; }
-    to { text-shadow: 0 0 16px #ffff00, 2px 2px #ff6600; }
-  }
+    .team-digit-label {
+      font-size: 8px;
+      color: #00ff00;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
 
-  .team-digit-label {
-    font-size: 8px;
-    color: #00ff00;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 2px;
-  }
-
-  .team-colon {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(20px, 5vw, 40px);
-    color: #ff00ff;
-    align-self: flex-start;
-    margin-top: 4px;
-    animation: colonBlink 1s step-end infinite;
-    line-height: 1;
-  }
-</style>
+    .team-colon {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(20px, 5vw, 40px);
+      color: #ff00ff;
+      align-self: flex-start;
+      margin-top: 4px;
+      animation: colonBlink 1s step-end infinite;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
 
 <div class="salary-app">
 
   <div class="confetti-container" id="confettiContainer"></div>
 
   <div class="marquee-wrap">
-    <div class="marquee-inner">💰 SALARY TRACKER 2000™ &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 💰 BEST VIEWED IN INTERNET EXPLORER 6 &nbsp;&nbsp;&nbsp; ★ THIS SITE IS UNDER CONSTRUCTION ★ &nbsp;&nbsp;&nbsp; 💰 FREE COUNTER: <span id="pageViews">1</span> VISITORS &nbsp;&nbsp;&nbsp; ★ GRAPHIC DESIGN IS MY PASSION ★ &nbsp;&nbsp;&nbsp;</div>
+    <div class="marquee-inner">💰 SALARY TRACKER 2000™ &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 💰 BEST VIEWED IN INTERNET EXPLORER 6 &nbsp;&nbsp;&nbsp; ★ THIS SITE IS UNDER CONSTRUCTION ★ &nbsp;&nbsp;&nbsp; 💰 FREE COUNTER: <span id="pageViews">69,420</span> VISITORS &nbsp;&nbsp;&nbsp; ★ GRAPHIC DESIGN IS MY PASSION ★ &nbsp;&nbsp;&nbsp;</div>
   </div>
 
   <div class="title-box">
     <span class="title-main">SALARY COUNTDOWN!!!</span>
-    <span class="title-sub">for night shift warriors 🦇 est. 2024 — made with luv &lt;3</span>
+    <span class="title-sub">for night shift warriors 🦇 est. 2026 — made with luv &lt;3 by mark</span>
   </div>
 
   <div class="clipart-row">
@@ -540,11 +547,9 @@
     <div class="timer-dismiss" id="dismissTimer">disappearing in <span id="dismissSeconds">30:00</span> min...</div>
   </div>
 
-
   <div class="motivational">
     <p id="motivationalText">loading motivational quote from clipart.com...</p>
   </div>
-
   
   <div class="separator"></div>
 
@@ -610,23 +615,32 @@ function cycleQuote() {
 cycleQuote();
 setInterval(cycleQuote, 5000);
 
+/**
+ * HELPER: Calculates the absolute current date and time matching Asia/Manila (UTC+8)
+ * completely regardless of what the user's OS or browser timezone setup says.
+ */
+function getManilaNow() {
+  const localDate = new Date();
+  // Get time representation in exact global UTC ms, then translate directly into the +8 hour window
+  const utcMs = localDate.getTime() + (localDate.getTimezoneOffset() * 60000);
+  return new Date(utcMs + (8 * 3600000));
+}
+
 function getNextPayday() {
-  const now = new Date();
-  const manilaOffset = 8 * 60;
-  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
-  const manilaTime = new Date(utcMs + manilaOffset * 60000);
+  const manilaTime = getManilaNow();
 
   function getPayDateInManila(year, month, day) {
     const d = new Date(year, month, day);
     const dow = d.getDay();
-    if (dow === 6) return new Date(year, month, day - 1);
-    if (dow === 0) return new Date(year, month, day - 2);
+    if (dow === 6) return new Date(year, month, day - 1); // Sat -> Fri
+    if (dow === 0) return new Date(year, month, day - 2); // Sun -> Fri
     return d;
   }
 
+  // Generates targets inside our simulated Manila-timeline context
   function getPayMoment(year, month, day) {
     const pd = getPayDateInManila(year, month, day);
-    return new Date(Date.UTC(pd.getFullYear(), pd.getMonth(), pd.getDate(), 4 - 8, 11, 0) + 8 * 3600000);
+    return new Date(pd.getFullYear(), pd.getMonth(), pd.getDate(), 4, 11, 0);
   }
 
   const y = manilaTime.getFullYear();
@@ -642,24 +656,22 @@ function getNextPayday() {
     getPayMoment(y, m + 2, 15),
   ];
 
-  const nowUTC = now.getTime();
   const THIRTY_MIN = 30 * 60 * 1000;
-
   for (const pd of candidates) {
-    const diff = pd.getTime() - nowUTC;
+    const diff = pd.getTime() - manilaTime.getTime();
     if (diff > -THIRTY_MIN) return pd;
   }
   return candidates[candidates.length - 1];
 }
 
 function formatPayday(payMoment) {
-  const options = { timeZone: 'Asia/Manila', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  const dateStr = payMoment.toLocaleDateString('en-PH', options);
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  // Using default locale formatting since date properties are explicitly shifted into context
+  const dateStr = payMoment.toLocaleDateString('en-US', options);
   return dateStr + ' at 4:11 AM';
 }
 
 let celebrationActive = false;
-let dismissTimeout = null;
 let dismissInterval = null;
 
 function launchConfetti() {
@@ -708,7 +720,8 @@ function showSalaryArrived(payMoment) {
   const dismissSec = document.getElementById('dismissSeconds');
   const arrivedTime = document.getElementById('arrivedTime');
 
-  arrivedTime.textContent = '(arrived: ' + payMoment.toLocaleTimeString('en-PH', { timeZone: 'Asia/Manila', hour: '2-digit', minute: '2-digit' }) + ' Manila time)';
+  const padTime = (val) => String(val).padStart(2, '0');
+  arrivedTime.textContent = '(arrived: ' + padTime(payMoment.getHours()) + ':' + padTime(payMoment.getMinutes()) + ' Manila time)';
   box.style.display = 'block';
   dismissEl.style.display = 'block';
 
@@ -731,9 +744,9 @@ function showSalaryArrived(payMoment) {
 function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
 
 function tick() {
+  const manilaNow = getManilaNow();
   const nextPay = getNextPayday();
-  const now = Date.now();
-  const diff = nextPay.getTime() - now;
+  const diff = nextPay.getTime() - manilaNow.getTime();
   const THIRTY_MIN = 30 * 60 * 1000;
 
   document.getElementById('nextPayDisplay').textContent = formatPayday(nextPay);
@@ -746,13 +759,11 @@ function tick() {
       setTimeout(() => { launchConfetti(); }, 2500);
       setTimeout(() => { launchConfetti(); }, 5000);
     }
+    
+    // Evaluate consecutive paycheck dynamic
     const nextNextPay = (() => {
       const after = new Date(nextPay.getTime() + 60 * 60 * 1000);
-      const tempNow = after;
-      const manilaOffset = 8 * 60;
-      const utcMs = tempNow.getTime() + tempNow.getTimezoneOffset() * 60000;
-      const manilaTime = new Date(utcMs + manilaOffset * 60000);
-      const y = manilaTime.getFullYear(), m = manilaTime.getMonth();
+      const y = after.getFullYear(), m = after.getMonth();
 
       function gpd(year, month, day) {
         const d = new Date(year, month, day);
@@ -763,7 +774,7 @@ function tick() {
       }
       function gpm(year, month, day) {
         const pd = gpd(year, month, day);
-        return new Date(Date.UTC(pd.getFullYear(), pd.getMonth(), pd.getDate(), 4 - 8, 11, 0) + 8 * 3600000);
+        return new Date(pd.getFullYear(), pd.getMonth(), pd.getDate(), 4, 11, 0);
       }
 
       const candidates = [
@@ -777,35 +788,26 @@ function tick() {
       return candidates[candidates.length - 1];
     })();
 
-    const d2 = nextNextPay.getTime() - now;
-    const td = Math.max(0, Math.floor(d2 / 86400000));
-    const th = Math.max(0, Math.floor((d2 % 86400000) / 3600000));
-    const tm = Math.max(0, Math.floor((d2 % 3600000) / 60000));
-    const ts = Math.max(0, Math.floor((d2 % 60000) / 1000));
-    document.getElementById('days').textContent = pad(td);
-    document.getElementById('hours').textContent = pad(th);
-    document.getElementById('minutes').textContent = pad(tm);
-    document.getElementById('seconds').textContent = pad(ts);
+    const d2 = nextNextPay.getTime() - manilaNow.getTime();
+    document.getElementById('days').textContent = pad(Math.floor(d2 / 86400000));
+    document.getElementById('hours').textContent = pad(Math.floor((d2 % 86400000) / 3600000));
+    document.getElementById('minutes').textContent = pad(Math.floor((d2 % 3600000) / 60000));
+    document.getElementById('seconds').textContent = pad(Math.floor((d2 % 60000) / 1000));
   } else {
     if (diff > 0) celebrationActive = false;
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('days').textContent = pad(d);
-    document.getElementById('hours').textContent = pad(h);
-    document.getElementById('minutes').textContent = pad(m);
-    document.getElementById('seconds').textContent = pad(s);
+    document.getElementById('days').textContent = pad(Math.floor(diff / 86400000));
+    document.getElementById('hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    document.getElementById('minutes').textContent = pad(Math.floor((diff % 3600000) / 60000));
+    document.getElementById('seconds').textContent = pad(Math.floor((diff % 60000) / 1000));
+    document.getElementById('salaryArrived').style.display = 'none';
   }
 }
 
-tick();
-setInterval(tick, 1000);
-
 function tickTeamBuilding() {
+  const manilaNow = getManilaNow();
+  // Target set for June 6, 2026, at 3:00 PM (15:00:00) inside simulated Manila time
   const teamBuildingDate = new Date(2026, 5, 6, 15, 0, 0);
-  const now = new Date();
-  const diff = teamBuildingDate.getTime() - now.getTime();
+  const diff = teamBuildingDate.getTime() - manilaNow.getTime();
 
   const days = Math.floor(diff / 86400000);
   const hours = Math.floor((diff % 86400000) / 3600000);
@@ -818,7 +820,9 @@ function tickTeamBuilding() {
   document.getElementById('teamSeconds').textContent = pad(Math.max(0, seconds));
 }
 
+tick();
 tickTeamBuilding();
+setInterval(tick, 1000);
 setInterval(tickTeamBuilding, 1000);
 
 let visits = 69420;
@@ -828,3 +832,6 @@ setInterval(() => {
   if (el) el.textContent = visits.toLocaleString();
 }, 3000);
 </script>
+
+</body>
+</html>
