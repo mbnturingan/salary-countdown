@@ -358,7 +358,7 @@
     }
 
     .team-building-box::before {
-      content: '🎉 TEAM BUILDING EVENT 🎉';
+      content: 'GENERAL ASEEMBLY!!';
       position: absolute;
       top: -14px;
       left: 50%;
@@ -421,7 +421,7 @@
     }
 
     .team-countdown::after {
-      content: '⭐ CHECK IN AT 3PM ⭐';
+      content: '⭐ red carpet party ⭐';
       position: absolute;
       bottom: -12px;
       left: 50%;
@@ -554,9 +554,9 @@
   <div class="separator"></div>
 
   <div class="team-building-box">
-    <span class="team-building-label">🚀 OPEX TEAM BUILDING 2026 🚀</span>
-    <span class="team-building-location">📍 Sierra Casitas | 🗓️ June 6-7, 2026</span>
-    <div class="team-building-info">Check-in at 3:00 PM • Don't be late or ELSE</div>
+    <span class="team-building-label">💃 GENERAL ASSEMBLY 2026 🕺</span>
+    <span class="team-building-location">📍 METROTENT, PASIG CITY | 🗓️ Sep 20, 2026</span>
+    <div class="team-building-info">Sasayaw si Juz</div>
     <div class="team-countdown">
       <div class="team-digit-block">
         <div class="team-digit-val" id="teamDays">00</div>
@@ -806,7 +806,7 @@ function tick() {
 function tickTeamBuilding() {
   const manilaNow = getManilaNow();
   // Target set for June 6, 2026, at 3:00 PM (15:00:00) inside simulated Manila time
-  const teamBuildingDate = new Date(2026, 5, 6, 15, 0, 0);
+  const teamBuildingDate = new Date(2026, 9, 20, 0, 0, 0);
   const diff = teamBuildingDate.getTime() - manilaNow.getTime();
 
   const days = Math.floor(diff / 86400000);
