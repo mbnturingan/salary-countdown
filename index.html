@@ -358,7 +358,7 @@
     }
 
     .team-building-box::before {
-      content: 'GENERAL ASEEMBLY!!';
+      content: 'GENERAL ASSEMBLY!!';
       position: absolute;
       top: -14px;
       left: 50%;
@@ -805,8 +805,8 @@ function tick() {
 
 function tickTeamBuilding() {
   const manilaNow = getManilaNow();
-  // Target set for June 6, 2026, at 3:00 PM (15:00:00) inside simulated Manila time
-  const teamBuildingDate = new Date(2026, 20, 9, 0, 0, 0);
+  // Target set for September 20, 2026, at 12:00 AM Manila time
+  const teamBuildingDate = new Date(2026, 8, 20, 0, 0, 0);
   const diff = teamBuildingDate.getTime() - manilaNow.getTime();
 
   const days = Math.floor(diff / 86400000);
