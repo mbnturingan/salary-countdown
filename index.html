@@ -806,7 +806,7 @@ function tick() {
 function tickTeamBuilding() {
   const manilaNow = getManilaNow();
   // Target set for June 6, 2026, at 3:00 PM (15:00:00) inside simulated Manila time
-  const teamBuildingDate = new Date(2026, 9, 20, 0, 0, 0);
+  const teamBuildingDate = new Date(2026, 20, 9, 0, 0, 0);
   const diff = teamBuildingDate.getTime() - manilaNow.getTime();
 
   const days = Math.floor(diff / 86400000);
