@@ -341,39 +341,72 @@
       display: none;
     }
 
+    .snow-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10%;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+      animation: snowFall linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes snowFall {
+      0% {
+        transform: translate3d(0, -10%, 0) scale(0.8);
+        opacity: 0;
+      }
+      10% { opacity: 0.9; }
+      100% {
+        transform: translate3d(var(--drift), 110vh, 0) scale(1.2);
+        opacity: 0;
+      }
+    }
+
     .halloween-event-box {
-      background: linear-gradient(45deg, #2b123d, #ff7518);
-      border: 8px solid #ff7518;
+      background: linear-gradient(135deg, #fffaf0, #d9f6d6, #d61818);
+      border: 8px solid #b30e2d;
       padding: 12px;
       margin: 6px 0;
       text-align: center;
       position: relative;
-      animation: halloweenEventPulse 1.2s ease-in-out infinite;
-      box-shadow: 0 0 20px #ff7518;
+      z-index: 1;
+      animation: christmasEventPulse 1.2s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(179, 14, 45, 0.6);
     }
 
-    @keyframes halloweenEventPulse {
-      0%, 100% { box-shadow: 0 0 10px #ff7518; }
-      50% { box-shadow: 0 0 30px #8a2be2, inset 0 0 20px rgba(255, 117, 24, 0.5); }
+    @keyframes christmasEventPulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(179, 14, 45, 0.5); }
+      50% { box-shadow: 0 0 28px rgba(46, 125, 50, 0.8), inset 0 0 18px rgba(255, 255, 255, 0.5); }
     }
 
     .halloween-event-box::before {
-      content: 'HALLOWEEN EVENT';
+      content: 'CHRISTMAS PARTY';
       position: absolute;
       top: -14px;
       left: 50%;
       transform: translateX(-50%);
-      background: #2b123d;
-      color: #ffb347;
+      background: #fff7db;
+      color: #a5102d;
       font-size: 11px;
       padding: 2px 12px;
       font-weight: 700;
       white-space: nowrap;
-      border: 2px solid #ff7518;
-      animation: halloweenEventBounce 0.8s ease-in-out infinite;
+      border: 2px solid #2f8f46;
+      animation: christmasEventBounce 0.8s ease-in-out infinite;
     }
 
-    @keyframes halloweenEventBounce {
+    @keyframes christmasEventBounce {
       0%, 100% { transform: translateX(-50%) translateY(0); }
       50% { transform: translateX(-50%) translateY(-4px); }
     }
@@ -381,28 +414,29 @@
     .halloween-event-label {
       font-family: 'Lobster', cursive;
       font-size: clamp(16px, 4vw, 28px);
-      color: #ffb347;
-      text-shadow: 3px 3px 0 #000000, -1px -1px 0 #8a2be2;
+      color: #0c5d2e;
+      text-shadow: 3px 3px 0 #ffffff, -1px -1px 0 #d61818;
       animation: wobble 2s ease-in-out infinite;
       display: block;
       margin-bottom: 8px;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
     }
 
     .halloween-event-date {
       font-size: 11px;
-      color: #2b123d;
+      color: #ffffff;
       font-weight: 700;
-      background: #ffb347;
+      background: linear-gradient(135deg, #d61818, #1e7d3e);
       display: inline-block;
       padding: 2px 8px;
       margin-bottom: 8px;
-      border: 2px dashed #2b123d;
+      border: 2px dashed #fff7db;
+      box-shadow: 0 0 10px rgba(214, 24, 24, 0.25);
     }
 
     .halloween-countdown {
-      background: #1b102a;
-      border: 4px solid #ff7518;
+      background: #0f2c20;
+      border: 4px solid #d61818;
       padding: 8px 4px;
       display: flex;
       justify-content: center;
@@ -413,13 +447,13 @@
     }
 
     .halloween-countdown::after {
-      content: 'FRIDAY • OCT 30';
+      content: 'SAT • DEC 12';
       position: absolute;
       bottom: -12px;
       left: 50%;
       transform: translateX(-50%);
-      background: #ff7518;
-      color: #2b123d;
+      background: #2f8f46;
+      color: #fff7db;
       font-size: 8px;
       padding: 1px 8px;
       font-weight: 700;
@@ -436,25 +470,25 @@
       font-family: 'Oswald', sans-serif;
       font-size: clamp(24px, 6vw, 48px);
       font-weight: 700;
-      color: #ffb347;
-      text-shadow: 0 0 8px #ffb347, 2px 2px #ff6600;
+      color: #fff7db;
+      text-shadow: 0 0 8px #fff7db, 2px 2px #2f8f46;
       line-height: 1;
       min-width: clamp(36px, 10vw, 60px);
       text-align: center;
-      animation: halloweenCountGlow 1s ease-in-out infinite alternate;
-      background: #2b123d;
-      border: 2px solid #ff6600;
+      animation: christmasCountGlow 1s ease-in-out infinite alternate;
+      background: linear-gradient(180deg, #1f5e38, #0b2d1d);
+      border: 2px solid #d61818;
       padding: 4px 2px 2px;
     }
 
-    @keyframes halloweenCountGlow {
-      from { text-shadow: 0 0 6px #ffb347, 2px 2px #ff6600; }
-      to { text-shadow: 0 0 16px #ffb347, 2px 2px #ff6600; }
+    @keyframes christmasCountGlow {
+      from { text-shadow: 0 0 6px #fff7db, 2px 2px #2f8f46; }
+      to { text-shadow: 0 0 16px #ffd166, 2px 2px #d61818; }
     }
 
     .halloween-digit-label {
       font-size: 8px;
-      color: #ffb347;
+      color: #ffd166;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -464,7 +498,7 @@
     .halloween-colon {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(20px, 5vw, 40px);
-      color: #ff00ff;
+      color: #d61818;
       align-self: flex-start;
       margin-top: 4px;
       animation: colonBlink 1s step-end infinite;
@@ -477,6 +511,7 @@
 <div class="salary-app">
 
   <div class="confetti-container" id="confettiContainer"></div>
+  <div class="snow-layer" id="snowLayer" aria-hidden="true"></div>
 
   <div class="marquee-wrap">
     <div class="marquee-inner">💰 SALARY TRACKER 2000™ &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 💰 BEST VIEWED IN INTERNET EXPLORER 6 &nbsp;&nbsp;&nbsp; ★ THIS SITE IS UNDER CONSTRUCTION ★ &nbsp;&nbsp;&nbsp; 💰 FREE COUNTER: <span id="pageViews">69,420</span> VISITORS &nbsp;&nbsp;&nbsp; ★ GRAPHIC DESIGN IS MY PASSION ★ &nbsp;&nbsp;&nbsp;</div>
@@ -546,15 +581,15 @@
   <div class="separator"></div>
 
   <div class="halloween-event-box">
-    <span class="halloween-event-label">🎃 Baryo ISTA 👻</span>
-    <span class="halloween-event-date">🗓️ Friday, October 30, 2026</span>
+    <span class="halloween-event-label">🎄 BOH - Christmas Party 🎅</span>
+    <span class="halloween-event-date">🗓️ Saturday, December 12, 2026</span>
     <div class="halloween-countdown">
       <div class="halloween-digit-block">
         <div class="halloween-digit-val" id="halloweenDays">00</div>
         <div class="halloween-digit-label">dayz</div>
       </div>
       <div class="halloween-colon">:</div>
-      <div class="halloween-digit-block">
+      <div class="halloween-digit-block">no
         <div class="halloween-digit-val" id="halloweenHours">00</div>
         <div class="halloween-digit-label">hourz</div>
       </div>
@@ -796,8 +831,8 @@ function tick() {
 
 function tickHalloweenEvent() {
   const manilaNow = getManilaNow();
-  // The event starts at midnight Manila time on October 30, 2026.
-  const halloweenEventDate = new Date(2026, 9, 30, 0, 0, 0);
+  // The event starts at midnight Manila time on December 12, 2026.
+  const halloweenEventDate = new Date(2026, 11, 12, 0, 0, 0);
   const diff = halloweenEventDate.getTime() - manilaNow.getTime();
 
   const days = Math.floor(diff / 86400000);
@@ -809,6 +844,24 @@ function tickHalloweenEvent() {
   document.getElementById('halloweenHours').textContent = pad(Math.max(0, hours));
   document.getElementById('halloweenMinutes').textContent = pad(Math.max(0, minutes));
   document.getElementById('halloweenSeconds').textContent = pad(Math.max(0, seconds));
+}
+
+const snowLayer = document.getElementById('snowLayer');
+for (let i = 0; i < 40; i++) {
+  const flake = document.createElement('span');
+  flake.className = 'snowflake';
+  const left = Math.random() * 100;
+  const duration = 8 + Math.random() * 10;
+  const delay = Math.random() * -20;
+  const size = 4 + Math.random() * 8;
+  const drift = (Math.random() * 80 - 40) + 'px';
+  flake.style.left = left + '%';
+  flake.style.width = size + 'px';
+  flake.style.height = size + 'px';
+  flake.style.animationDuration = duration + 's';
+  flake.style.animationDelay = delay + 's';
+  flake.style.setProperty('--drift', drift);
+  snowLayer.appendChild(flake);
 }
 
 tick();
